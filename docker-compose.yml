@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+    wp:
+        build:
+            context: ./wp
+        container_name: wp
+        restart: always
+        ports:
+            - 8080:80
+        depends_on:
+            - db
+        volumes:
+            - ./wp/src:/var/www/html
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: user
+            WORDPRESS_DB_PASSWORD: 111111
+            WORDPRESS_DB_NAME: wp_react
+            WORDPRESS_DEBUG: 1
+
+    db:
+        image: mariadb:10.7.3-focal
+        command: --default-authentication-plugin=mysql_native_password
+        container_name: db
+        restart: always
+        ports:
+          - 2222:3306
+        volumes:
+            - ./db:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: wp_react
+            MYSQL_USER: user
+            MYSQL_PASSWORD: 111111
+            MYSQL_ROOT_PASSWORD: 111111
