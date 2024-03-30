@@ -45,7 +45,7 @@ class Dummy extends \Elementor\Widget_Base
       [],
       \WpElementorReact\Hook::PLUGIN_VERSION,
       [
-        'in_footer' => 'true',
+        'strategy' => 'defer'
       ]
     );
     wp_localize_script(\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy', 'wpElementorReactGlobals', [
