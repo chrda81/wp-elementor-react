@@ -17,8 +17,6 @@ class Dummy extends \Elementor\Widget_Base
    */
   use Units;
 
-  private static ?string $uuid = null;
-
   /**
    * Class constructor.
    *
@@ -28,17 +26,6 @@ class Dummy extends \Elementor\Widget_Base
   public function __construct($data = [], $args = null)
   {
     parent::__construct($data, $args);
-
-    /**
-     * Set uuid for dynamic root element in DOM
-     */
-    if (!self::$uuid && isset($data['settings']['react_uuid'])) {
-      self::$uuid = $data['settings']['react_uuid'];
-
-      StringOperations::addDynamicElement('dummy-' . self::$uuid);
-    }
-    error_log('React ID: ' . self::$uuid);
-    error_log('Dynamic Elements: ' . json_encode(StringOperations::getDynamicElements()));
 
     /**
      * Frontend styles for Dummy
@@ -62,10 +49,6 @@ class Dummy extends \Elementor\Widget_Base
         'in_footer' => 'true',
       ]
     );
-    wp_localize_script(\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy', 'wpElementorReactGlobals', [
-      'ajaxUrl' => admin_url('admin-ajax.php'),
-      'dynamicElements' => StringOperations::getDynamicElements(),
-    ]);
   }
 
   public function get_name()
@@ -144,6 +127,14 @@ class Dummy extends \Elementor\Widget_Base
   {
     $settings = $this->get_settings_for_display();
 
+    $react_settings = [
+      'uuid'       => $settings['react_uuid'],
+      'l18n'       => [
+          'main_title' => 'Hi this is your React app running in WordPress',
+      ],
+      'some_items' => [ 'lorem ipsum', 'dolor sit amet' ],
+    ];
+
     $data = [
       'class' => [
         \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '--dummy',
@@ -174,7 +165,7 @@ class Dummy extends \Elementor\Widget_Base
                     <?php echo $settings['title']; ?>
                 </h2>
             <?php } ?>
-            <div id="wpelementorreact-dummy-<?php echo $settings['react_uuid']; ?>">React Dummy</div>
+            <div id="wpelementorreact-dummy<?php if ($settings['react_uuid']) echo "-" . $settings['react_uuid']; ?>" data-default-settings="<?php esc_attr_e( wp_json_encode( $react_settings ) ); ?>">React Dummy</div>
         </div>
     <?php
   }

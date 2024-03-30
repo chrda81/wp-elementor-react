@@ -1,35 +1,28 @@
 import React from 'react';
-import {createRoot} from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
 window.addEventListener('load', () => {
-  let target: HTMLElement | null = null;
-  let uuid: string | null = null;
+  const idStartsWith = 'wpelementorreact-dummy';
+  const targets = document.querySelectorAll(`div[id^=${idStartsWith}]`);
 
-  console.log('Elements', window.wpElementorReactGlobals?.dynamicElements);
-  const uuids = window.wpElementorReactGlobals?.dynamicElements || [];
+  if (targets.length === 0) {
+    throw new Error('Cannot find any element starting with #wpelementorreact-dummy');
+  }
 
-  uuids.forEach((element) => {
-    console.log('Element', element);
-    if (element.startsWith('dummy')) {
-      const temp_target = document.getElementById(`wpelementorreact-${element}`);
+  targets.forEach(target => {
+    // if target has no child nodes or node is a text node
+    if (!target.hasChildNodes() || target?.firstChild?.nodeType === Node.TEXT_NODE) {
+      console.log(`Injecting React component in target ${target.id}`);
 
-      if (temp_target && !temp_target.hasChildNodes()) {
-        target = temp_target;
-        uuid = element;
-      }
+      const settings = JSON.parse(target.getAttribute('data-default-settings') || '{}');
+      const root = createRoot(target);
+
+      root.render(
+        <React.StrictMode>
+          <App settings={settings} />
+        </React.StrictMode>
+      );
     }
   });
-
-  if (!target) {
-    console.error(`Cannot find element #wpelementorreact-${uuid}`);
-  } else {
-    const root = createRoot(target);
-
-    root.render(
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    );
-  }
 });
