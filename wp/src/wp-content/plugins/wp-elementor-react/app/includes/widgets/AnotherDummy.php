@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 require_once WPELEMENTORREACT_PATH . '/app/includes/traits/Units.php';
 use WpElementorReact\Utils\StringOperations;
 
-class Dummy extends \Elementor\Widget_Base
+class AnotherDummy extends \Elementor\Widget_Base
 {
   /**
    * @since 0.0.1
@@ -27,40 +27,40 @@ class Dummy extends \Elementor\Widget_Base
   {
     parent::__construct($data, $args);
     /**
-     * Frontend styles for Dummy
+     * Frontend styles for AnotherDummy
      */
     wp_register_style(
-      \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy',
-      WPELEMENTORREACT_URL . 'assets/dummy.css',
+      \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-anotherdummy',
+      WPELEMENTORREACT_URL . 'assets/anotherdummy.css',
       [],
       \WpElementorReact\Hook::PLUGIN_VERSION
     );
 
     /**
-     * Frontend scripts for Dummy
+     * Frontend scripts for AnotherDummy
      */
     wp_register_script(
-      \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy',
-      WPELEMENTORREACT_URL . 'assets/dummy.js',
+      \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-anotherdummy',
+      WPELEMENTORREACT_URL . 'assets/anotherdummy.js',
       [],
       \WpElementorReact\Hook::PLUGIN_VERSION,
       [
         'in_footer' => 'true',
       ]
     );
-    wp_localize_script(\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy', 'wpElementorReactGlobals', [
+    wp_localize_script(\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-anotherdummy', 'wpElementorReactGlobals', [
       'ajaxUrl' => admin_url('admin-ajax.php'),
     ]);
   }
 
   public function get_name()
   {
-    return 'dummy';
+    return 'anotherdummy';
   }
 
   public function get_title()
   {
-    return esc_html__('React Dummy', \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN);
+    return esc_html__('React AnotherDummy', \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN);
   }
 
   public function get_icon()
@@ -75,24 +75,24 @@ class Dummy extends \Elementor\Widget_Base
 
   public function get_keywords()
   {
-    return ['react', 'dummy', \WpElementorReact\Hook::PLUGIN_NAME];
+    return ['react', 'anotherdummy', \WpElementorReact\Hook::PLUGIN_NAME];
   }
 
   public function get_script_depends()
   {
-    error_log('Dummy constructor called.');
-    return [\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy'];
+    error_log('AnotherDummy constructor called.');
+    return [\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-anotherdummy'];
   }
 
   public function get_style_depends()
   {
-    return [\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-dummy'];
+    return [\WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '-anotherdummy'];
   }
 
   protected function register_controls()
   {
     $this->start_controls_section('section_content', [
-      'label' => esc_html__('React Dummy', \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN),
+      'label' => esc_html__('React AnotherDummy', \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN),
       'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
     ]);
 
@@ -124,8 +124,8 @@ class Dummy extends \Elementor\Widget_Base
 
     $data = [
       'class' => [
-        \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '--dummy',
-        \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '--dummy-flex',
+        \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '--anotherdummy',
+        \WpElementorReact\Hook::PLUGIN_TEXT_DOMAIN . '--anotherdummy-flex',
         isset($settings['custom_class']) ? $settings['custom_class'] : '',
         isset($settings['class']) ? $settings['class'] : '',
       ],
@@ -152,7 +152,7 @@ class Dummy extends \Elementor\Widget_Base
                     <?php echo $settings['title']; ?>
                 </h2>
             <?php } ?>
-            <div id="wpelementorreact-dummy">React Dummy</div>
+            <div id="wpelementorreact-anotherdummy">React AnotherDummy</div>
         </div>
     <?php
   }

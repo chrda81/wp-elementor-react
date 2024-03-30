@@ -259,6 +259,9 @@ final class Hook
   {
     require_once WPELEMENTORREACT_PATH . '/app/includes/widgets/Dummy.php';
     $widgets_manager->register(new \Dummy());
+
+    require_once WPELEMENTORREACT_PATH . '/app/includes/widgets/AnotherDummy.php';
+    $widgets_manager->register(new \AnotherDummy());
   }
 
   /**
@@ -272,6 +275,7 @@ final class Hook
   public function unregister_widgets($widgets_manager)
   {
     $widgets_manager->unregister('dummy');
+    $widgets_manager->unregister('anotherdummy');
   }
 
   /**
