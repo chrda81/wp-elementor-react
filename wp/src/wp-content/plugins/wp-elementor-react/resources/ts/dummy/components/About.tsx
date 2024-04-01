@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 export default function About() {
   return (
@@ -12,7 +12,7 @@ export default function About() {
         </p>
       </main>
       <nav>
-        <Link to="/">Home</Link>
+        <Button href="/" variant="contained">Home</Button>
       </nav>
     </>
   );
