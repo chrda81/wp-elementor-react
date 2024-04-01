@@ -1,19 +1,16 @@
 import React from "react";
-import Button from '@mui/material/Button';
+import { Button, Typography } from "@mui/material";
 
 export default function About() {
   return (
-    <>
+    <React.Fragment>
       <main>
-        <h2>Who are we?</h2>
-        <p>
-          That feels like an existential question, don't you
-          think?
-        </p>
+        <Typography variant="h6">Who are we?</Typography>
+        <Typography variant="body1">That feels like an existential question, don't you think?</Typography>
       </main>
       <nav>
         <Button href="/" variant="contained">Home</Button>
       </nav>
-    </>
+    </React.Fragment>
   );
 }
