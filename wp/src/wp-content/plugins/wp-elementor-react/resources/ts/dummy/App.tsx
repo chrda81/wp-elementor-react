@@ -1,4 +1,7 @@
-import React from 'react';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
 
 interface AppProps {
   settings: any;
@@ -6,20 +9,14 @@ interface AppProps {
 
 const App: React.FC<AppProps> = (props) => {
   const { settings } = props;
-  const items = settings.some_items || [];
 
   return (
-    <div>
-      <h1>{`${settings.l18n.main_title} - ${settings.uuid}`}</h1>
-      <ul>
-        {
-          items.map((item, index) => {
-            return (
-              <li key={index}>{item}</li>
-            )
-          })
-        }
-      </ul>
+    <div className="App">
+      <h1>Welcome to ReactPress with React Router!</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+      </Routes>
     </div>
   );
 };

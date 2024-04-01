@@ -125,10 +125,17 @@ class Dummy extends \Elementor\Widget_Base
 
   protected function render()
   {
+    global $wp;
+    // Since slugs itself can't contain slashes,
+    // let's explode on slashes and get just the last portion.
+    $request_args = explode('/', $wp->request);
+    $current_slug = end($request_args);
+
     $settings = $this->get_settings_for_display();
 
     $react_settings = [
       'uuid'       => $settings['react_uuid'],
+      'slug'       => $current_slug,
       'l18n'       => [
           'main_title' => 'Hi this is your React app running in WordPress',
       ],

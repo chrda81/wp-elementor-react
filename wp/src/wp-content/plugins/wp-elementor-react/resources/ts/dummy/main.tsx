@@ -1,6 +1,18 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
+
+
+function Router(props: { basename: string, children?: React.ReactNode }) {
+  const { basename, children } = props;
+  if (typeof window === 'undefined') {
+    return <StaticRouter location={`/${basename}`}>{children}</StaticRouter>;
+  }
+
+  return <BrowserRouter basename={`/${basename}`}>{children}</BrowserRouter>;
+}
 
 window.addEventListener('load', () => {
   const idStartsWith = 'wpelementorreact-dummy';
@@ -20,7 +32,9 @@ window.addEventListener('load', () => {
 
       root.render(
         <React.StrictMode>
-          <App settings={settings} />
+          <Router basename={settings?.slug}>
+            <App settings={settings} />
+          </Router>
         </React.StrictMode>
       );
     }
